@@ -1,0 +1,12 @@
+# Eliminates the need for ".php" in requests
+# Reroutes bad or incomplete requests to "index.php"
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+<IfModule mod_rewrite.c>
+  Options -Multiviews
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule  ^(.+)$ yourdomain [QSA,L]
+</IfModule>
