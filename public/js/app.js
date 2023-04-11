@@ -176,7 +176,7 @@ submit.addEventListener("click", function (e) {
     e.preventDefault();
     // Build request url
     if (search.value) {
-        let url = `fetch.php?food=${search.value}`;
+        let url = `https://phpstack-973382-3435178.cloudwaysapps.com/fetch.php?food=${search.value}`;
         // Fetch data
         searchFood(url);
     }
