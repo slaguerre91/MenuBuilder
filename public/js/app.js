@@ -15,9 +15,11 @@ class UI {
         // Build html for menu list
         const menu = Menu.getMenu();
         let list = "";
-        menu.forEach((item) => list += `<tr><td><i class="fa-sharp fa-solid fa-trash mx-2"></i>${item.name}</td><td>${item.calories}</td><td>${item.protein}</td><td>${item.carbohydrates}</td><td>${item.fat}</td></tr>`);
-        document.querySelector("#menu").innerHTML = list;
-        UI.menuRemoveIcons();
+        if (menu) {
+            menu.forEach((item) => list += `<tr><td><i class="fa-sharp fa-solid fa-trash mx-2"></i>${item.name}</td><td>${item.calories}</td><td>${item.protein}</td><td>${item.carbohydrates}</td><td>${item.fat}</td></tr>`);
+            document.querySelector("#menu").innerHTML = list;
+            UI.menuRemoveIcons();
+        }
     }
 
     static displayResults(searchResults) {
@@ -37,13 +39,15 @@ class UI {
     static filterResults(results) {
         // Removes search results already stored in local memory
         const menu = Menu.getMenu();
-        menu.forEach(item => {
-            results.forEach(el => {
-                if (el.name === item.name && el.calories === Number(item.calories)) {
-                    results.splice(results.indexOf(el), 1);
-                }
-            });
-        })
+        if (menu) {
+            menu.forEach(item => {
+                results.forEach(el => {
+                    if (el.name === item.name && el.calories === Number(item.calories)) {
+                        results.splice(results.indexOf(el), 1);
+                    }
+                });
+            })
+        }
     }
 
     static clearResults() {
@@ -112,11 +116,13 @@ class Menu {
     // Stores and manages menu in local storage
     static getMenu() {
         // Get items in local storage
-        return JSON.parse(localStorage.getItem("menu"));
+        if (localStorage.getItem("menu"))
+            return JSON.parse(localStorage.getItem("menu"));
     }
 
     static add(item) {
         // Add item to menu
+        // If menu is null, convert to empty array to facilitate first push
         let menu = Menu.getMenu();
         if (menu == null) {
             menu = [];
@@ -158,9 +164,8 @@ async function searchFood(url) {
         const results = document.querySelector("#results");
         UI.displayResults(resultArray);
         results.scrollIntoView();
-        // console.log(jsonData._links.next.href);
     } catch (e) {
-        console.log("error");
+        console.log("e.message");
     }
 }
 
@@ -176,7 +181,7 @@ submit.addEventListener("click", function (e) {
     e.preventDefault();
     // Build request url
     if (search.value) {
-        let url = `https://phpstack-973382-3435178.cloudwaysapps.com/fetch.php?food=${search.value}`;
+        let url = `fetch.php?food=${search.value}`;
         // Fetch data
         searchFood(url);
     }
