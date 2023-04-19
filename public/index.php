@@ -25,6 +25,7 @@
                         <span class="input-group-text h-100"><i class="fa-solid fa-magnifying-glass"></i></span>
                     </div>
                 </div>
+                <p><i>Build your meal plan while keeping track of key nutrients.</i></p>
             </div>
         </div>
         <h2>My Menu</h2>

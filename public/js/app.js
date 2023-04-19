@@ -186,3 +186,13 @@ submit.addEventListener("click", function (e) {
         searchFood(url);
     }
 });
+
+// Add event listener to search bar
+search.addEventListener("keydown", function (e) {
+    // Build request url
+    if (e.key === "Enter") {
+        let url = `fetch.php?food=${search.value}`;
+        // Fetch data
+        searchFood(url);
+    }
+});
